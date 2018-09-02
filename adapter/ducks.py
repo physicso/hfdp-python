@@ -1,8 +1,8 @@
 """
 Duck and turkey adapter
 
-Author: m1ge7
-Date: 2014/03/28
+Author: m1ge7 and Eric Wang
+Date: 2018/09/02
 """
 
 from abc import ABCMeta, abstractmethod
@@ -79,23 +79,23 @@ class DuckAdapter(Turkey):
 def turkey_test_drive():
     # Turkey Test Drive
     duck = MallardDuck()
-    duckAdapter = DuckAdapter(duck)
+    duck_adapter = DuckAdapter(duck)
 
     for i in range(10):
         print "The DuckAdapter says..."
-        duckAdapter.gobble()
-        duckAdapter.fly()
+        duck_adapter.gobble()
+        duck_adapter.fly()
 
 
 def duck_test_drive():
-    def test_duck(duck):
-        duck.quack()
-        duck.fly()
+    def test_duck(input_duck):
+        input_duck.quack()
+        input_duck.fly()
 
     # Duck Test Drive
     duck = MallardDuck()
     turkey = WildTurkey()
-    turkeyAdapter = TurkeyAdapter(turkey)
+    turkey_adapter = TurkeyAdapter(turkey)
 
     print "The Turkey says..."
     turkey.gobble()
@@ -105,7 +105,7 @@ def duck_test_drive():
     test_duck(duck)
 
     print "\nThe TurkeyAdapter says..."
-    test_duck(turkeyAdapter)
+    test_duck(turkey_adapter)
 
 
 if __name__ == '__main__':

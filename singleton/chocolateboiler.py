@@ -24,22 +24,22 @@ class ChocolateBoiler(object):
         self._boiled = False
 
     def fill(self):
-        if self.isEmpty():
+        if self.is_empty():
             self._empty = False
             self._boiled = False
 
     def drain(self):
-        if not self.isEmpty() and self.isBoiled():
+        if not self.is_empty() and self.is_boiled():
             self._empty = True
 
     def boil(self):
-        if not self.isEmpty() and self.isBoiled():
+        if not self.is_empty() and self.is_boiled():
             self._boiled = True
 
-    def isEmpty(self):
+    def is_empty(self):
         return self._empty
 
-    def isBoiled(self):
+    def is_boiled(self):
         return self._boiled
 
 

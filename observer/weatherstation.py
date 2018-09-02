@@ -1,8 +1,8 @@
 """
 Weather station
 
-Author: m1ge7
-Date: 2014/03/25
+Author: m1ge7 and Eric Wang
+Date: 2018/09/02
 """
 
 from abc import ABCMeta, abstractmethod
@@ -16,15 +16,15 @@ class Subject:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def registerObserver(self, observer):
+    def register_observer(self, observer):
         pass
 
     @abstractmethod
-    def removeObserver(self, observer):
+    def remove_observer(self, observer):
         pass
 
     @abstractmethod
-    def notifyObservers():
+    def notify_observers(self):
         pass
 
 
@@ -36,28 +36,28 @@ class WeatherData(Subject):
         self._humidity = None
         self._pressure = None
 
-    def registerObserver(self, observer):
+    def register_observer(self, observer):
         self._observers.append(observer)
 
-    def removeObserver(self, observer):
+    def remove_observer(self, observer):
         try:
             self._observers.remove(observer)
         except:
             pass
 
-    def notifyObservers(self):
+    def notify_observers(self):
         for obs in self._observers:
             obs.update(self._temperature, self._humidity, self._pressure)
 
-    def measurementsChanged(self):
-        self.notifyObservers()
+    def measurements_changed(self):
+        self.notify_observers()
 
-    def setMeasurements(self, temperature, humidity, pressure):
+    def set_measurements(self, temperature, humidity, pressure):
         self._temperature = temperature
         self._humidity = humidity
         self._pressure = pressure
         
-        self.measurementsChanged()
+        self.measurements_changed()
 
 
 ###############################################################################
@@ -82,12 +82,12 @@ class DisplayElement:
 
 class CurrentConditionsDisplay(Observer, DisplayElement):
 
-    def __init__(self, weather_data):
+    def __init__(self, input_weather_data):
         self._temperature = None
         self._humidity = None
-        self._weather_data = weather_data
+        self._weather_data = input_weather_data
 
-        weather_data.registerObserver(self)
+        weather_data.register_observer(self)
 
     def update(self, temperature, humidity, pressure):
         self._temperature = temperature
@@ -101,14 +101,14 @@ class CurrentConditionsDisplay(Observer, DisplayElement):
 
 class StatisticsDisplay(Observer, DisplayElement):
 
-    def __init__(self, weather_data):
+    def __init__(self, input_weather_data):
         self._max_temp = 0.0
         self._min_temp = 200
         self._temp_sum = 0.0
         self._num_readings = 0
-        self._weather_data = weather_data
+        self._weather_data = input_weather_data
 
-        weather_data.registerObserver(self)
+        weather_data.register_observer(self)
 
     def update(self, temp, humidity, pressure):
         self._temp_sum += temp
@@ -130,12 +130,12 @@ class StatisticsDisplay(Observer, DisplayElement):
 
 class ForecastDisplay(Observer, DisplayElement):
 
-    def __init__(self, weather_data):
+    def __init__(self, input_weather_data):
         self._current_pressure = 29.92
         self._last_pressure = 0.0
-        self._weather_data = weather_data
+        self._weather_data = input_weather_data
 
-        weather_data.registerObserver(self)
+        weather_data.register_observer(self)
 
     def update(self, temp, humidity, pressure):
         self._last_pressure = self._current_pressure
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     statistics_display = StatisticsDisplay(weather_data)
     forecast_display = ForecastDisplay(weather_data)
 
-    weather_data.setMeasurements(80, 65, 30.4)
-    weather_data.setMeasurements(82, 70, 29.2)
-    weather_data.setMeasurements(78, 90, 29.2)
+    weather_data.set_measurements(80, 65, 30.4)
+    weather_data.set_measurements(82, 70, 29.2)
+    weather_data.set_measurements(78, 90, 29.2)
 
