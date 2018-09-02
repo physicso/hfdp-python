@@ -1,18 +1,31 @@
 """
 Starbuzz coffee
 
-Author: m1ge7
-Date: 2014/03/25
+Author: m1ge7 and Eric Wang
+Date: 2018/09/02
 """
 
 from abc import ABCMeta, abstractmethod
 
+menu = {
+    # Beverages
+    'HouseBlend': 0.89,
+    'DarkRoast': 0.99,
+    'Espresso': 1.99,
+    'Decaf': 1.05,
+    # Add-ons
+    'Milk': 0.10,
+    'Mocha': 0.20,
+    'Soy': 0.15,
+    'Whip': 0.10
+}
 
 ###############################################################################
 # Beverages
 ###############################################################################
 
 class Beverage:
+    """The abstract class constructing beverages and the CondimentDecorator."""
     __metaclass__ = ABCMeta
 
     def __init__(self):
@@ -32,7 +45,7 @@ class HouseBlend(Beverage):
         self._description = "House Blend Coffee"
 
     def cost(self):
-        return .89
+        return menu['HouseBlend']
 
 
 class DarkRoast(Beverage):
@@ -41,7 +54,7 @@ class DarkRoast(Beverage):
         self._description = "Dark Roast Coffee"
 
     def cost(self):
-        return .99
+        return menu['DarkRoast']
 
 
 class Espresso(Beverage):
@@ -50,7 +63,7 @@ class Espresso(Beverage):
         self._description = "Espresso"
 
     def cost(self):
-        return 1.99
+        return menu['Espresso']
 
 
 class Decaf(Beverage):
@@ -59,7 +72,7 @@ class Decaf(Beverage):
         self._description = "Decaf Coffee"
 
     def cost(self):
-        return 1.05
+        return menu['Decaf']
 
 
 ###############################################################################
@@ -76,50 +89,50 @@ class CondimentDecorator(Beverage):
 
 class Milk(CondimentDecorator):
 
-    def __init__(self, beverage):
-        self._beverage = beverage
+    def __init__(self, input_beverage):
+        self._beverage = input_beverage
 
     def get_description(self):
         return self._beverage.get_description() + ", Milk"
 
     def cost(self):
-        return .10 + self._beverage.cost()
+        return menu['Milk'] + self._beverage.cost()
 
 
 class Mocha(CondimentDecorator):
 
-    def __init__(self, beverage):
-        self._beverage = beverage
+    def __init__(self, input_beverage):
+        self._beverage = input_beverage
 
     def get_description(self):
         return self._beverage.get_description() + ", Mocha"
 
     def cost(self):
-        return .20 + self._beverage.cost()
+        return menu['Mocha'] + self._beverage.cost()
 
 
 class Soy(CondimentDecorator):
 
-    def __init__(self, beverage):
-        self._beverage = beverage
+    def __init__(self, input_beverage):
+        self._beverage = input_beverage
 
     def get_description(self):
         return self._beverage.get_description() + ", Soy"
 
     def cost(self):
-        return .15 + self._beverage.cost()
+        return menu['Soy'] + self._beverage.cost()
 
 
 class Whip(CondimentDecorator):
 
-    def __init__(self, beverage):
-        self._beverage = beverage
+    def __init__(self, input_beverage):
+        self._beverage = input_beverage
 
     def get_description(self):
         return self._beverage.get_description() + ", Whip"
 
     def cost(self):
-        return .10 + self._beverage.cost()
+        return menu['Whip'] + self._beverage.cost()
 
 
 ###############################################################################
