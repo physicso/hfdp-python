@@ -18,3 +18,5 @@ So far, I've got covered the following patterns:
 * Composite
 * Status pattern
 * Combining patterns
+
+Continued by Eric Wang...
